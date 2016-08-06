@@ -94,10 +94,21 @@ var getTop = function(topResults){
 		type : "GET",
 	})
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
+		var resultArray = result.items;
 		console.log(result);
+		displayResult(result.items);
 	});
 }
 
+var displayResult = function(result){
+
+	$(result).each(function(index, items){
+		var topTemplate = '<dl class="result question"><dt>Answerer Name</dt><dd class="answerer">'+ items.user.display_name + '</dd><dt>Reputation</dt><dd class="answerer-rep">'+items.user.reputation+'</dd><dt>Post Count</dt><dd class="answerer-post-count">'+items.post_count+'</dd><dt>Score</dt><dd class="answerer-score">'+items.score+'</dd><dt>User Type</dt><dd class="answerer-type">'+
+												items.user.user_type+'</dd><dt>Link</dt><a href="'+items.user.link+
+											'"><dd class="answerer-link">Profile<dd></a></dl>';
+		$('.results').append(topTemplate);
+	});
+}
 
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(e){
